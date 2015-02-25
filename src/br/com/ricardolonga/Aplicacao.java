@@ -1,13 +1,18 @@
 package br.com.ricardolonga;
 
-/**
- * Observe a complexidade de adicionar o evento "cancelar" e o status CANCELADO.
- * Estamos violando o princípio OCP pois para estender o sistema é necessário alterar as classes já prontas.
- */
+
+import java.util.Arrays;
+
 public class Aplicacao {
 
     public static void main(String[] args) {
+        Pedido pedido = new Pedido();
+        
+        pedido.setItens(Arrays.asList(new Item(5), new Item(180), new Item(290), new Item(29)));
+        pedido.setPagamento(new FormaPagamento("avista"));
 
+        System.out.println(pedido.getTotal());
+        System.out.println(pedido.getTotalComDesconto());
     }
 
 }
