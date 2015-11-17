@@ -30,15 +30,15 @@ public class Pedido {
     }
     
     public double getTotalComDesconto() {
+        Strategy descontoStrategy;
+
         if ("avista".equalsIgnoreCase(pagamento.getForma())) {
-            return getTotal() - (0.2 * getTotal());
-        } else if (getTotal() > 500) {
-            return getTotal() - (0.15 * getTotal());
-        } else if (getTotal() > 300) {
-            return getTotal() - (0.1 * getTotal());
+            descontoStrategy = new FormaPagamentoStrategy();
+        } else {
+            descontoStrategy = new ValorStrategy();
         }
-        
-        return getTotal();
+
+        return descontoStrategy.calculaDesconto(this);
     }
     
 }
