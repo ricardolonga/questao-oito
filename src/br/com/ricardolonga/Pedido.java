@@ -7,7 +7,7 @@ import java.util.List;
  */
 public class Pedido {
 
-    FormaPagamento pagamento;
+    FormaPagamento formaPagamento;
     
     List<Item> itens;
 
@@ -15,8 +15,8 @@ public class Pedido {
         this.itens = itens;
     }
 
-    public void setPagamento(FormaPagamento pagamento) {
-        this.pagamento = pagamento;
+    public void setFormaPagamento(FormaPagamento formaPagamento) {
+        this.formaPagamento = formaPagamento;
     }
 
     public double getTotal() {
@@ -30,12 +30,16 @@ public class Pedido {
     }
     
     public double getTotalComDesconto() {
-        if ("avista".equalsIgnoreCase(pagamento.getForma())) {
+        if (FormaPagamento.A_VISTA.equals(formaPagamento)) {
             return getTotal() - (0.2 * getTotal());
-        } else if (getTotal() > 500) {
-            return getTotal() - (0.15 * getTotal());
-        } else if (getTotal() > 300) {
-            return getTotal() - (0.1 * getTotal());
+        }
+
+        if (FormaPagamento.A_PRAZO.equals(formaPagamento)) {
+            if (getTotal() > 500) {
+                return getTotal() - (0.15 * getTotal());
+            } else if (getTotal() > 300) {
+                return getTotal() - (0.1 * getTotal());
+            }
         }
         
         return getTotal();
