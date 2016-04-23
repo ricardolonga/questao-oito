@@ -7,7 +7,7 @@ import java.util.List;
  */
 public class Pedido {
 
-    FormaPagamento pagamento;
+    FormaPagamento formaPagamento;
     
     List<Item> itens;
 
@@ -15,8 +15,8 @@ public class Pedido {
         this.itens = itens;
     }
 
-    public void setPagamento(FormaPagamento pagamento) {
-        this.pagamento = pagamento;
+    public void setFormaPagamento(FormaPagamento formaPagamento) {
+        this.formaPagamento = formaPagamento;
     }
 
     public double getTotal() {
@@ -30,15 +30,7 @@ public class Pedido {
     }
     
     public double getTotalComDesconto() {
-        Strategy descontoStrategy;
-
-        if ("avista".equalsIgnoreCase(pagamento.getForma())) {
-            descontoStrategy = new FormaPagamentoStrategy();
-        } else {
-            descontoStrategy = new ValorStrategy();
-        }
-
-        return descontoStrategy.calculaDesconto(this);
+        return CalculoStrategy.create(formaPagamento).aplicarDesconto(this);
     }
     
 }
